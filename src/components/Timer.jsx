@@ -6,31 +6,44 @@ export default class Timer extends Component {
   
   state = {
     seconds: 0,
+    display: '00:00',
     timerActive: false,
   }
 
   presetTime = (e) => {
     const time = Number(e.target.value);
-    this.setState({seconds: time});
-    console.log(this.state)
+    this.setState({seconds: time, display: this.displayTime()});
   };
 
   startTimer = () => {
     this.setState({timerActive: true});
     // o countdown em si
     this.intervalId = setInterval(() => {
-      this.setState((prevState) => ({seconds: prevState.seconds - 1}));
+      this.setState((prevState) => ({seconds: prevState.seconds - 1, display: this.displayTime()}));
     }, oneSecond);
   };
 
-  handleChange = (e) => {
-    console.log(e.target.value);
+  inputHandleChange = (e) => {
     this.setState({seconds: e.target.value});
+  };
+
+  displayTime = () => {
+    const { seconds } = this.state;
+    const displayMinutes = Math.floor(seconds / 60);
+    const displaySeconds = seconds - displayMinutes * 60;
+    // this.setState({display: `${displayMinutes}:${displaySeconds}`});
+    return `${displayMinutes}:${displaySeconds}`;
   };
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
+
+  stopTimer = () => {
+    this.componentWillUnmount();
+    this.setState({timerActive: false});
+    console.log('timer stopped');
+  };
 
   clearState = () => {
     this.componentWillUnmount();
@@ -42,13 +55,13 @@ export default class Timer extends Component {
   };
 
   render() {
-    const { timerActive, seconds } = this.state;
+    const { timerActive, seconds, display } = this.state;
     return (
       <div className='timer-div'>
-        <span id='timer'>{seconds}</span>
+        <span id='timer'>{display}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.handleChange} value={seconds}/>
+            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.inputHandleChange} value={seconds}/>
           </label>
           <div className='presets'>
             <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
@@ -59,7 +72,7 @@ export default class Timer extends Component {
             {!timerActive ? (
               <button type='button' className='green sans' onClick={this.startTimer}>Start</button>
             ) : (
-              <button type='button' className='red sans'>Stop</button>
+              <button type='button' className='red sans' onClick={this.stopTimer}>Stop</button>
             )}
             <button type='button' className='purple sans' onClick={this.clearState}>Reset</button>
           </div>
