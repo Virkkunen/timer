@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 export default class Button extends Component {
   render() {
-    const { name } = this.props;
+    const { name, color, font } = this.props;
 
     return (
-      <button name={name}>{name}</button>
+      <button name={name} className={`${color} ${font}`}>{name}</button>
     )
   }
 }

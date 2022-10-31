@@ -1,38 +1,98 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Fira+Sans:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Fira Sans', sans-serif;
+  background-color: #282828;
+  color: #fbf1c7;
+  max-width: 768px;
+  margin: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#timer {
+  font-family: 'Fira Code', monospace;
+  font-size: 64px;
+  margin-top: 48px;
+  background-color: #3c3836;
+  padding: 24px;
+  border-radius: 8px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.timer-div {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-flow: column nowrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  row-gap: 48px;
 }
 
-.App-link {
-  color: #61dafb;
+/* buttons */
+
+.buttons {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  gap: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  background-color: #665c54;
+  border: 0px;
+  border-radius: 8px;
+  padding: 18px;
+  color: #fbf1c7;
+  font-weight: bold;
+  transition: ease-in-out 0.2s;
+}
+
+button:hover {
+  filter: brightness(115%);
+}
+
+button:active {
+  filter: brightness(75%);
+}
+
+/* inputs */
+input {
+  border-radius: 8px;
+  border: 0;
+  padding: 6px;
+  background-color: #504945;
+  color: #ebdbb2;
+  font-family: 'Fira Code', monospace;
+  font-weight: 500;
+}
+
+/* colors */
+
+.green {
+  background-color: #b8bb26;
+}
+
+.red {
+  background-color: #fb4934;
+}
+
+.purple {
+  background-color: #d3869b;
+}
+
+.blue {
+  background-color: #83a598;
+}
+
+/* fonts */
+
+.mono {
+  font-family: 'Fira Code', monospace;
+}
+
+.sans {
+  font-family: 'Fira Sans', sans-serif;
 }
