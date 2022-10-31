@@ -21,6 +21,7 @@ body {
   background-color: #3c3836;
   padding: 24px;
   border-radius: 8px;
+  border: 1px solid yellow;
 }
 
 .timer-div {
@@ -29,15 +30,33 @@ body {
   justify-content: center;
   text-align: center;
   row-gap: 48px;
+  border: 1px solid green;
 }
 
 /* buttons */
 
-.buttons {
+.controls {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-evenly;
-  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 24px 0;
+  border: 1px solid purple;
+}
+
+.presets {
+  display: flex;
+  justify-content: center;
+  gap: 0px 24px;
+  border: 1px solid red;
+}
+
+.control-buttons {
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  gap: 0px 24px;
 }
 
 button {
@@ -67,6 +86,18 @@ input {
   color: #ebdbb2;
   font-family: 'Fira Code', monospace;
   font-weight: 500;
+}
+
+label {
+  display: flex;
+  justify-content: center;
+  gap: 0 24px;
+  align-items: center;
+}
+
+label span {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 /* colors */

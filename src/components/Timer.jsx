@@ -5,15 +5,27 @@ export default class Timer extends Component {
   
   state = {
     seconds: 0,
+    minutes: 0,
+    timerActive: false,
   }
 
+  clearState = () => {
+    this.setState({
+      seconds: 0,
+      minutes: 0,
+      timerActive: false,
+    });
+    console.log('state cleared');
+  };
+
   render() {
+    const timeDisplay = `${this.state.minutes}:${this.state.seconds}`;
     return (
       <div className='timer-div'>
-        <span id='timer'>{this.state.seconds}</span>
-        <div className='buttons'>
+        <span id='timer'>{timeDisplay}</span>
+        <div className='controls'>
           <label htmlFor='custom-time'>
-            <span>Time: </span>
+            <span>Time:</span>
             <input type="number" name='custom-time' min='0'/>
           </label>
           <div className='presets'>
