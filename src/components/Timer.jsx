@@ -23,6 +23,11 @@ export default class Timer extends Component {
     }, oneSecond);
   };
 
+  handleChange = (e) => {
+    console.log(e.target.value);
+    this.setState({seconds: e.target.value});
+  };
+
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
@@ -36,7 +41,6 @@ export default class Timer extends Component {
     console.log('state cleared');
   };
 
-
   render() {
     const { timerActive, seconds } = this.state;
     return (
@@ -44,7 +48,7 @@ export default class Timer extends Component {
         <span id='timer'>{seconds}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="number" name='custom-time' min='0' placeholder='Time'/>
+            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.handleChange} value={seconds}/>
           </label>
           <div className='presets'>
             <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
