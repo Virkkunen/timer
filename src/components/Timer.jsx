@@ -1,43 +1,42 @@
 import React, { Component } from 'react'
-import Button from './Button'
 
 export default class Timer extends Component {
   
   state = {
     seconds: 0,
-    minutes: 0,
     timerActive: false,
   }
 
   clearState = () => {
     this.setState({
       seconds: 0,
-      minutes: 0,
       timerActive: false,
     });
     console.log('state cleared');
   };
 
   render() {
-    const timeDisplay = `${this.state.minutes}:${this.state.seconds}`;
-    const { timerActive } = this.state;
+    const { timerActive, seconds } = this.state;
     return (
       <div className='timer-div'>
-        <span id='timer'>{timeDisplay}</span>
+        <span id='timer'>{seconds}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
             <input type="number" name='custom-time' min='0' placeholder='Time'/>
           </label>
           <div className='presets'>
-            <Button name="5:00" color="blue" font="mono" />
-            <Button name="10:00" color="blue" font="mono" />
-            <Button name="15:00" color="blue" font="mono" />
+            <button type='button' className='blue mono' name='5' value='300' disabled={timerActive}>5:00</button>
+            <button type='button' className='blue mono' name='10' value='600' disabled={timerActive}>10:00</button>
+            <button type='button' className='blue mono' name='15' value='900' disabled={timerActive}>15:00</button>
           </div>
           <div className='control-buttons'>
-            <Button name={timerActive ? "Stop" : "Start"} color={timerActive ? "red" : "green"} />
-            <Button name="Reset" color="purple"/>
+            {!timerActive ? (
+              <button type='button' className='green sans'>Start</button>
+            ) : (
+              <button type='button' className='red sans'>Stop</button>
+            )}
+            <button type='button' className='purple sans'>Reset</button>
           </div>
-          
         </div>
       </div>
     )

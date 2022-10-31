@@ -99,14 +99,21 @@ button {
   color: var(--bg0);
   font-weight: bold;
   transition: ease-in-out 0.2s;
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.25);
 }
 
 button:hover {
   filter: brightness(115%);
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
 }
 
 button:active {
   filter: brightness(75%);
+  box-shadow: 0 rgba(0, 0, 0, 0);
+}
+
+button:disabled {
+  filter: saturate(25%) brightness(75%);
 }
 
 /* inputs */
