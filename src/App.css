@@ -32,6 +32,19 @@
   --purple: #d3869b;
 } */
 
+@media screen and (max-width: 767.9px) {
+  * {
+    font-size: 28px;
+  }
+
+  #time-input {
+    width: 320px;
+    text-align: center;
+    font-size: 22px;
+  }
+  
+}
+
 :root {
   --sans: 'Fira Sans', sans-serif;
   --mono: 'Fira Code', monospace;
@@ -121,10 +134,15 @@ input {
   border-radius: 8px;
   border: 0;
   padding: 12px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.25);
   color: var(--fg1);
   font-family: var(--mono);
   font-weight: 500;
+}
+
+input:disabled {
+  filter: saturate(25%) brightness(75%);
 }
 
 label {
