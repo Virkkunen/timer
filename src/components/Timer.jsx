@@ -31,7 +31,10 @@ export default class Timer extends Component {
     // senti o cérebro expandindo fazendo essa conta
     // e ai diminuiu de novo porque esse input=time só deixa até 24
     // const calculatedTime = e.target.valueAsNumber / 60000;
-    const time = e.target.value;
+    //
+    const timeString = e.target.value.split(':');
+    // const time = (+timeString[0]) * 60 + (+timeString[1]);
+    const time = timeString.reduce((acc, time) => (60 * acc) + + time);
     if (time < 0) return;
     this.setState({seconds: time}, () => this.displayTime());
   };
@@ -94,7 +97,7 @@ export default class Timer extends Component {
         <span id='timer'>{display}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="number" name='custom-time' min='0' placeholder='Time in seconds' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
+            <input type="text" name='custom-time' placeholder='Time, eg.: 1:19 or 79' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
           </label>
           <div className='presets'>
             <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
