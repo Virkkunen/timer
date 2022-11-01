@@ -27,6 +27,19 @@ export default class Timer extends Component {
     }, oneSecond);
   };
 
+  restoreInputColors = () => {
+    const input = document.getElementById('time-input');
+    input.style.backgroundColor = 'var(--bg3)';
+    input.style.color = 'var(--fg1)';
+  };
+
+  restoreDisplayColors = () => {
+    const timer = document.getElementById('timer');
+    timer.style.backgroundColor = 'var(--bg1)';
+    timer.style.color = 'var(--fg0)';
+    timer.innerText = this.state.display;
+  };
+
   inputHandleChange = (e) => {
     // senti o cérebro expandindo fazendo essa conta
     // e ai diminuiu de novo porque esse input=time só deixa até 24
@@ -46,7 +59,7 @@ export default class Timer extends Component {
       input.style.color = 'var(--bg0)';
       return;
     };
-    input.style.backgroundColor = 'var(--bg3)';
+    this.restoreInputColors();
     this.setState({seconds: time}, () => this.displayTime());
   };
 
@@ -105,10 +118,10 @@ export default class Timer extends Component {
       display: '00:00',
       timerActive: false,
     });
-    const timer = document.getElementById('timer');
-    timer.style.backgroundColor = 'var(--bg1)';
-    timer.style.color = 'var(--fg0)';
-    timer.innerText = this.state.display;
+    // display bg
+    this.restoreDisplayColors();
+    // input bg
+    this.restoreInputColors();
     this.clearInputField();
     console.log('state cleared');
   };
