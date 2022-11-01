@@ -46,6 +46,21 @@ export default class Timer extends Component {
     input.style.color = 'var(--bg0)';
   };
 
+  validateTimeInput = (time) => {
+    if (time.length > 3 || !time) {
+      this.invalidInput();
+      return false;
+    }
+    for (let i in time) {
+      console.log(time[i])
+      if (time[i].length > 10 || time[i] < 0) {
+        this.invalidInput();
+        return false;
+      }
+    };
+    return true;
+  };
+
   inputHandleChange = (e) => {
     // senti o cérebro expandindo fazendo essa conta
     // e ai diminuiu de novo porque esse input=time só deixa até 24
@@ -53,10 +68,7 @@ export default class Timer extends Component {
     //
     const timeSplitter = e.target.value.split(':');
     // acordei só pra consertar isso
-    if (timeSplitter[0].length > 10 || timeSplitter.length > 3) {
-      this.invalidInput();
-      return;
-    }
+    if (!this.validateTimeInput(timeSplitter)) return;
     // const time = (+timeString[0]) * 60 + (+timeString[1]);
     // esse reduce converte de MM:SS ou SS pra segundos
     const time = (+timeSplitter.reduce((acc, time) => (60 * acc) + + time));
@@ -72,6 +84,7 @@ export default class Timer extends Component {
   };
 
   displayTime = () => {
+    this.restoreDisplayColors();
     const { seconds } = this.state;
     if (seconds < 0) {
       this.setState({display: '00:00'});
