@@ -52,7 +52,6 @@ export default class Timer extends Component {
       return false;
     }
     for (let i in time) {
-      console.log(time[i])
       if (time[i].length > 10 || time[i] < 0) {
         this.invalidInput();
         return false;
@@ -170,6 +169,7 @@ export default class Timer extends Component {
             <button type='button' className='purple sans' onClick={this.clearState}>Reset</button>
           </div>
         </div>
+        
       </div>
     )
   }

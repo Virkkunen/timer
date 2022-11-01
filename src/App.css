@@ -2,6 +2,7 @@
 
 /* catppuccin mocha */
 :root {
+  --bg-darker: #181825;
   --bg0: #1e1e2e;
   --bg1: #313244;
   --bg2: #45475a;
@@ -37,12 +38,25 @@
     font-size: 28px;
   }
 
+  body {
+    background-color: var(--bg-darker);
+  }
+
   #time-input {
     width: 320px;
     text-align: center;
     font-size: 22px;
   }
-  
+}
+
+@media screen and (min-width: 768px) {
+  * {
+    font-size: 20px;
+  }
+
+  .timer-div {
+    background-color: var(--bg-darker);
+  }
 }
 
 :root {
@@ -54,20 +68,29 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: 0.25s ease-in-out;
 }
 
 body {
   font-family: var(--sans);
   background-color: var(--bg0);
   color: var(--fg0);
-  max-width: 768px;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 #timer {
   font-family: var(--mono);
   font-size: 64px;
-  margin-top: 48px;
+  /* margin-top: 48px; */
   background-color: var(--bg1);
   padding: 24px;
   border-radius: 8px;
@@ -79,6 +102,8 @@ body {
   justify-content: center;
   text-align: center;
   row-gap: 48px;
+  border-radius: 8px;
+  padding: 32px;
 }
 
 /* buttons */
@@ -111,18 +136,17 @@ button {
   padding: 18px;
   color: var(--bg0);
   font-weight: bold;
-  transition: ease-in-out 0.2s;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 255);
 }
 
 button:hover {
   filter: brightness(115%);
-  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 255);
 }
 
 button:active {
   filter: brightness(75%);
-  box-shadow: 0 rgba(0, 0, 0, 0);
+  box-shadow: 0;
 }
 
 button:disabled {
