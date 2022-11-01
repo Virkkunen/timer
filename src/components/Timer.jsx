@@ -12,31 +12,45 @@ export default class Timer extends Component {
 
   presetTime = (e) => {
     const time = Number(e.target.value);
-    this.setState({seconds: time, display: this.displayTime()});
+    this.setState({seconds: time}, () => this.displayTime());
   };
 
   startTimer = () => {
+    const { seconds } = this.state;
+    if (seconds <= 0 ) return console.log('invalid time');
+
     this.setState({timerActive: true});
     // o countdown em si
     this.intervalId = setInterval(() => {
-      this.setState((prevState) => ({seconds: prevState.seconds - 1, display: this.displayTime()}));
+      this.setState((prevState) => ({seconds: prevState.seconds - 1}), this.displayTime());
     }, oneSecond);
   };
 
   inputHandleChange = (e) => {
-    this.setState({seconds: e.target.value});
+    if (e.target.value < 0) return;
+    this.setState({seconds: Number(e.target.value)}, () => this.displayTime());
   };
 
   displayTime = () => {
     const { seconds } = this.state;
     const displayMinutes = Math.floor(seconds / 60);
-    const displaySeconds = seconds - displayMinutes * 60;
-    // this.setState({display: `${displayMinutes}:${displaySeconds}`});
-    return `${displayMinutes}:${displaySeconds}`;
+    const displaySeconds = seconds % 60;
+    const formatMinutes = ((displayMinutes < 10) ? ('0' + displayMinutes) : displayMinutes);
+    const formatSeconds = ((displaySeconds < 10) ? ('0' + displaySeconds) : displaySeconds);
+    const display = `${formatMinutes}:${formatSeconds}`;
+    this.setState({display: display});
   };
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
+  }
+
+  componentDidUpdate(prevState) {
+    console.log(prevState.seconds)
+    const { seconds } = this.state;
+    if (seconds === 0 ) {
+      this.componentWillUnmount();
+    }
   }
 
   stopTimer = () => {
