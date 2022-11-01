@@ -68,12 +68,21 @@ export default class Timer extends Component {
     clearInterval(this.intervalId); // pausa/para o timer
   }
 
+  timerComplete = () => {
+    new Audio('alarm.mp3').play();
+    const timer = document.getElementById('timer');
+    timer.style.backgroundColor = 'var(--green)';
+    timer.style.color = 'var(--bg0)';
+    timer.innerText = 'Timer complete!';
+  };
+
   componentDidUpdate(prevState) {
     const { seconds, timerDone } = this.state;
     if (seconds < 0 && !timerDone) {
       // pausa timer, limpa state, trava loop
       this.componentWillUnmount();
       this.clearState();
+      this.timerComplete();
       this.setState({timerDone: true}); // segunda validação pra não dar loop
     }
   }
@@ -96,6 +105,10 @@ export default class Timer extends Component {
       display: '00:00',
       timerActive: false,
     });
+    const timer = document.getElementById('timer');
+    timer.style.backgroundColor = 'var(--bg1)';
+    timer.style.color = 'var(--fg0)';
+    timer.innerText = this.state.display;
     this.clearInputField();
     console.log('state cleared');
   };
