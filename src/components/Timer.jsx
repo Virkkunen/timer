@@ -28,8 +28,10 @@ export default class Timer extends Component {
   };
 
   inputHandleChange = (e) => {
-    if (e.target.value < 0) return;
-    this.setState({seconds: Number(e.target.value)}, () => this.displayTime());
+    // senti o cérebro expandindo fazendo essa conta
+    const calculatedTime = e.target.valueAsNumber / 60000;
+    if (calculatedTime < 0) return;
+    this.setState({seconds: calculatedTime}, () => this.displayTime());
   };
 
   displayTime = () => {
@@ -90,7 +92,7 @@ export default class Timer extends Component {
         <span id='timer'>{display}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
+            <input type="time" name='custom-time' min='00:00' placeholder='Time' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
           </label>
           <div className='presets'>
             <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
