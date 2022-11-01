@@ -51,15 +51,15 @@ export default class Timer extends Component {
     // e ai diminuiu de novo porque esse input=time só deixa até 24
     // const calculatedTime = e.target.valueAsNumber / 60000;
     //
-    const timeString = e.target.value.split(':');
+    const timeSplitter = e.target.value.split(':');
     // acordei só pra consertar isso
-    if (timeString[0].length > 10 || timeString.length > 3) {
+    if (timeSplitter[0].length > 10 || timeSplitter.length > 3) {
       this.invalidInput();
       return;
     }
     // const time = (+timeString[0]) * 60 + (+timeString[1]);
     // esse reduce converte de MM:SS ou SS pra segundos
-    const time = (+timeString.reduce((acc, time) => (60 * acc) + + time));
+    const time = (+timeSplitter.reduce((acc, time) => (60 * acc) + + time));
     //
     // pra estilizar caso esteja errado
     //
