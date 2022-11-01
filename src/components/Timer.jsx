@@ -35,12 +35,13 @@ export default class Timer extends Component {
     const timeString = e.target.value.split(':');
     // const time = (+timeString[0]) * 60 + (+timeString[1]);
     // esse reduce converte de MM:SS ou SS pra segundos
-    const time = +timeString.reduce((acc, time) => (60 * acc) + + time);
+    const time = (+timeString.reduce((acc, time) => (60 * acc) + + time));
+    console.log(time)
     //
     // pra estilizar caso esteja errado
     const input = document.getElementById('time-input');
     //
-    if (time < 0 || typeof time !== 'number') {
+    if (time < 0 || !time || typeof time !== 'number') {
       input.style.backgroundColor = 'var(--red)';
       input.style.color = 'var(--bg0)';
       return;
