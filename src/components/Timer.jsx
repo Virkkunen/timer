@@ -17,7 +17,7 @@ export default class Timer extends Component {
   };
 
   startTimer = () => {
-    const { seconds, timerDone } = this.state;
+    const { seconds } = this.state;
     if (seconds <= 0 ) return console.log('invalid time');
 
     this.setState({timerActive: true, timerDone: false});
@@ -37,6 +37,7 @@ export default class Timer extends Component {
     if (seconds < 0) {
       this.setState({display: '00:00'});
     }
+    // a gambiarra tá grande mas funciona
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
     const formatMinutes = ((displayMinutes < 10) ? ('0' + displayMinutes) : displayMinutes);
@@ -46,16 +47,17 @@ export default class Timer extends Component {
   };
 
   componentWillUnmount() {
-    clearInterval(this.intervalId);
+    clearInterval(this.intervalId); // pausa/para o timer
   }
 
   componentDidUpdate(prevState) {
     console.log(prevState.seconds)
     const { seconds, timerDone } = this.state;
     if (seconds < 0 && !timerDone) {
+      // pausa timer, limpa state, trava loop
       this.componentWillUnmount();
       this.clearState();
-      this.setState({timerDone: true});
+      this.setState({timerDone: true}); // segunda validação pra não dar loop
     }
   }
 
