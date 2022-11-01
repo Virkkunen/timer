@@ -35,7 +35,16 @@ export default class Timer extends Component {
     const timeString = e.target.value.split(':');
     // const time = (+timeString[0]) * 60 + (+timeString[1]);
     const time = timeString.reduce((acc, time) => (60 * acc) + + time);
-    if (time < 0) return;
+    //
+    // pra estilizar caso esteja errado
+    const input = document.getElementById('time-input');
+    //
+    if (time < 0 || typeof time !== 'number') {
+      input.style.backgroundColor = 'var(--red)';
+      input.style.color = 'var(--bg0)';
+      return;
+    };
+    input.style.backgroundColor = 'var(--bg3)';
     this.setState({seconds: time}, () => this.displayTime());
   };
 
@@ -58,7 +67,6 @@ export default class Timer extends Component {
   }
 
   componentDidUpdate(prevState) {
-    console.log(prevState.seconds)
     const { seconds, timerDone } = this.state;
     if (seconds < 0 && !timerDone) {
       // pausa timer, limpa state, trava loop
