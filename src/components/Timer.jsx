@@ -45,23 +45,30 @@ export default class Timer extends Component {
     console.log('timer stopped');
   };
 
+  clearInputField = () => {
+    const input = document.getElementById('time-input');
+    input.value = '';
+  };
+
   clearState = () => {
     this.componentWillUnmount();
     this.setState({
       seconds: 0,
+      display: '00:00',
       timerActive: false,
     });
+    this.clearInputField();
     console.log('state cleared');
   };
 
   render() {
-    const { timerActive, seconds, display } = this.state;
+    const { timerActive, display } = this.state;
     return (
       <div className='timer-div'>
         <span id='timer'>{display}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.inputHandleChange} value={seconds}/>
+            <input type="number" name='custom-time' min='0' placeholder='Time' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
           </label>
           <div className='presets'>
             <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
