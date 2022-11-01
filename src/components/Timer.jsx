@@ -8,6 +8,7 @@ export default class Timer extends Component {
     seconds: 0,
     display: '00:00',
     timerActive: false,
+    timerDone: false,
   }
 
   presetTime = (e) => {
@@ -16,10 +17,10 @@ export default class Timer extends Component {
   };
 
   startTimer = () => {
-    const { seconds } = this.state;
+    const { seconds, timerDone } = this.state;
     if (seconds <= 0 ) return console.log('invalid time');
 
-    this.setState({timerActive: true});
+    this.setState({timerActive: true, timerDone: false});
     // o countdown em si
     this.intervalId = setInterval(() => {
       this.setState((prevState) => ({seconds: prevState.seconds - 1}), this.displayTime());
@@ -33,6 +34,9 @@ export default class Timer extends Component {
 
   displayTime = () => {
     const { seconds } = this.state;
+    if (seconds < 0) {
+      this.setState({display: '00:00'});
+    }
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
     const formatMinutes = ((displayMinutes < 10) ? ('0' + displayMinutes) : displayMinutes);
@@ -47,9 +51,11 @@ export default class Timer extends Component {
 
   componentDidUpdate(prevState) {
     console.log(prevState.seconds)
-    const { seconds } = this.state;
-    if (seconds === 0 ) {
+    const { seconds, timerDone } = this.state;
+    if (seconds < 0 && !timerDone) {
       this.componentWillUnmount();
+      this.clearState();
+      this.setState({timerDone: true});
     }
   }
 
