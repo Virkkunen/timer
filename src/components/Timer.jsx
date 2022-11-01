@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Footer from './Footer';
 
 const oneSecond = 1000;
 
@@ -147,7 +148,7 @@ export default class Timer extends Component {
   };
 
   render() {
-    const { timerActive, display } = this.state;
+    const { timerActive, display, timerDone } = this.state;
     return (
       <div className='timer-div'>
         <span id='timer'>{display}</span>
@@ -169,7 +170,7 @@ export default class Timer extends Component {
             <button type='button' className='purple sans' onClick={this.clearState}>Reset</button>
           </div>
         </div>
-        
+        { timerDone && <Footer />}
       </div>
     )
   }

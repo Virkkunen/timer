@@ -208,3 +208,26 @@ label span {
 .sans {
   font-family: var(--sans);
 }
+
+/* footer */
+
+.footer, .footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--fg1);
+}
+
+a:hover {
+  color: var(--blue);
+}
+
+a:active {
+  filter: brightness(75%);
+}
