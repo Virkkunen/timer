@@ -14,7 +14,7 @@ export default class Timer extends Component {
 
   presetTime = (e) => {
     const time = Number(e.target.value);
-    this.setState({seconds: time}, () => this.displayTime());
+    this.setState({seconds: time}, this.displayTime);
   };
 
   startTimer = () => {
@@ -24,7 +24,7 @@ export default class Timer extends Component {
     this.setState({timerActive: true, timerDone: false});
     // o countdown em si
     this.intervalId = setInterval(() => {
-      this.setState((prevState) => ({seconds: prevState.seconds - 1}), this.displayTime());
+      this.setState((prevState) => ({seconds: prevState.seconds - 1}), this.displayTime);
     }, oneSecond);
   };
 
@@ -87,16 +87,12 @@ export default class Timer extends Component {
     };
 
     this.restoreInputColors();
-    this.setState({seconds: time}, () => this.displayTime());
+    this.setState({seconds: time}, this.displayTime);
   };
 
   displayTime = () => {
     this.restoreDisplayColors();
     const { seconds } = this.state;
-    if (seconds < 0) {
-      this.setState({display: '00:00'});
-      return;
-    }
     // a gambiarra tá grande mas funciona
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
@@ -107,7 +103,10 @@ export default class Timer extends Component {
     this.setState({display: display});
   };
 
-  stopInterval = () => clearInterval(this.intervalId);
+  stopInterval = () => {
+    clearInterval(this.intervalId);
+    this.setState({timerActive: false});
+  };
 
   componentWillUnmount() {
     this.stopInterval();
@@ -115,20 +114,26 @@ export default class Timer extends Component {
 
   timerComplete = () => {
     new Audio('alarm.mp3').play();
+
     const timer = document.getElementById('timer');
     timer.style.backgroundColor = 'var(--green)';
     timer.style.color = 'var(--bg0)';
-    timer.innerText = 'Timer complete!';
+
+    this.setState({display: 'Timer complete!', timerDone: false});
   };
 
-  componentDidUpdate(prevState) {
-    const { seconds, timerDone } = this.state;
-    if (seconds < 0 && !timerDone) {
-      // pausa timer, limpa state, trava loop
+  componentDidUpdate() {
+    const { seconds, timerDone, timerActive } = this.state;
+    if (seconds === 0 && !timerDone && timerActive) {
+      // pausa timer, limpa state, conclui timer, toca alarme, muda cor, muda texto 
       this.stopInterval();
-      this.clearState();
+      this.clearStatePartial();
+    }
+    // segunda validação porque algo quebrou quando consertei o delay
+    // e eu não sei o que é, mas essa fita crepe arruma
+    if (seconds === 0 && timerDone && !timerActive) {
+      this.stopInterval();
       this.timerComplete();
-      this.setState({timerDone: true}); // segunda validação pra não dar loop
     }
   }
 
@@ -141,9 +146,10 @@ export default class Timer extends Component {
   clearInputField = () => {
     const input = document.getElementById('time-input');
     input.value = '';
+    this.restoreInputColors();
   };
 
-  clearState = () => {
+  clearStateFully = () => {
     this.stopInterval();
     this.setState({
       seconds: 0,
@@ -152,13 +158,22 @@ export default class Timer extends Component {
       timerDone: false,
     });
     this.restoreDisplayColors();
-    this.restoreInputColors();
     this.clearInputField();
     console.log('state cleared');
   };
 
+  clearStatePartial = () => {
+    this.stopInterval();
+    this.setState({
+      timerActive: false,
+      timerDone: true,
+    });
+    this.clearInputField();
+    console.log('state partially cleared');
+  };
+
   render() {
-    const { timerActive, display, timerDone } = this.state;
+    const { timerActive, display } = this.state;
     return (
       <div className='timer-div'>
         <span id='timer'>{display}</span>
@@ -216,13 +231,13 @@ export default class Timer extends Component {
             <button
               type='button'
               className='purple sans'
-              onClick={this.clearState}
+              onClick={this.clearStateFully}
             >
               Reset
             </button>
           </div>
         </div>
-        { timerDone && <Footer />}
+        <Footer />
       </div>
     )
   }
