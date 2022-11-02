@@ -41,7 +41,7 @@ export default class Timer extends Component {
     timer.innerText = this.state.display;
   };
 
-  invalidInput = () => {
+  invalidInputColors = () => {
     const input = document.getElementById('time-input');
     input.style.backgroundColor = 'var(--red)';
     input.style.color = 'var(--bg0)';
@@ -49,13 +49,13 @@ export default class Timer extends Component {
 
   validateTimeInput = (time) => {
     if (time.length > 3 || !time) {
-      this.invalidInput();
+      this.invalidInputColors();
       return false;
     }
 
     for (let i in time) {
       if (time[i].length > 10 || time[i] < 0) {
-        this.invalidInput();
+        this.invalidInputColors();
         return false;
       }
     };
@@ -82,7 +82,7 @@ export default class Timer extends Component {
     const time = (+timeSplitter.reduce((acc, time) => (60 * acc) + + time));
     // validação do reduce
     if (!this.validateTimeReduce(time)) {
-      this.invalidInput();
+      this.invalidInputColors();
       return;
     };
 
@@ -100,6 +100,7 @@ export default class Timer extends Component {
     // a gambiarra tá grande mas funciona
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
+    // coloca o 0 a esquerda, poderia usar String.padLeft
     const formatMinutes = ((displayMinutes < 10) ? ('0' + displayMinutes) : displayMinutes);
     const formatSeconds = ((displaySeconds < 10) ? ('0' + displaySeconds) : displaySeconds);
     const display = `${formatMinutes}:${formatSeconds}`;
