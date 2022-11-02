@@ -52,13 +52,22 @@ export default class Timer extends Component {
       this.invalidInput();
       return false;
     }
+
     for (let i in time) {
       if (time[i].length > 10 || time[i] < 0) {
         this.invalidInput();
         return false;
       }
     };
+
     return true;
+  };
+
+  validateTimeReduce = (time) => {
+    const typeOfTime = (typeof time === 'number');
+    const timeNotNegative = time >= 0;
+
+    return typeOfTime && timeNotNegative;
   };
 
   inputHandleChange = (e) => {
@@ -67,18 +76,16 @@ export default class Timer extends Component {
     // const calculatedTime = e.target.valueAsNumber / 60000;
     //
     const timeSplitter = e.target.value.split(':');
-    // acordei só pra consertar isso
+    // validação do split
     if (!this.validateTimeInput(timeSplitter)) return;
-    // const time = (+timeString[0]) * 60 + (+timeString[1]);
-    // esse reduce converte de MM:SS ou SS pra segundos
+    // esse reduce converte de MM:SS ou HH:MM:SS pra segundos
     const time = (+timeSplitter.reduce((acc, time) => (60 * acc) + + time));
-    //
-    // pra estilizar caso esteja errado
-    //
-    if (time < 0 || !time || typeof time !== 'number') {
+    // validação do reduce
+    if (!this.validateTimeReduce(time)) {
       this.invalidInput();
       return;
     };
+
     this.restoreInputColors();
     this.setState({seconds: time}, () => this.displayTime());
   };
@@ -88,6 +95,7 @@ export default class Timer extends Component {
     const { seconds } = this.state;
     if (seconds < 0) {
       this.setState({display: '00:00'});
+      return;
     }
     // a gambiarra tá grande mas funciona
     const displayMinutes = Math.floor(seconds / 60);
