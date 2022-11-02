@@ -6,8 +6,14 @@ export default class Footer extends Component {
   render() {
     return (
       <div className='footer'>
-        <FontAwesomeIcon icon={ faGithub } />
-        <a href='https://github.com/Virkkunen'>@Virkkunen</a>
+        <a
+          href='https://github.com/Virkkunen'
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={ faGithub } />
+          @Virkkunen
+        </a>
       </div>
     )
   }
