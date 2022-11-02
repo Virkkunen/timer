@@ -106,8 +106,10 @@ export default class Timer extends Component {
     this.setState({display: display});
   };
 
+  stopInterval = () => clearInterval(this.intervalId);
+
   componentWillUnmount() {
-    clearInterval(this.intervalId); // pausa/para o timer
+    this.stopInterval();
   }
 
   timerComplete = () => {
@@ -122,7 +124,7 @@ export default class Timer extends Component {
     const { seconds, timerDone } = this.state;
     if (seconds < 0 && !timerDone) {
       // pausa timer, limpa state, trava loop
-      this.componentWillUnmount();
+      this.stopInterval();
       this.clearState();
       this.timerComplete();
       this.setState({timerDone: true}); // segunda validação pra não dar loop
@@ -130,7 +132,7 @@ export default class Timer extends Component {
   }
 
   stopTimer = () => {
-    this.componentWillUnmount();
+    this.stopInterval();
     this.setState({timerActive: false});
     console.log('timer stopped');
   };
@@ -141,15 +143,14 @@ export default class Timer extends Component {
   };
 
   clearState = () => {
-    this.componentWillUnmount();
+    this.stopInterval();
     this.setState({
       seconds: 0,
       display: '00:00',
       timerActive: false,
+      timerDone: false,
     });
-    // display bg
     this.restoreDisplayColors();
-    // input bg
     this.restoreInputColors();
     this.clearInputField();
     console.log('state cleared');
