@@ -163,20 +163,62 @@ export default class Timer extends Component {
         <span id='timer'>{display}</span>
         <div className='controls'>
           <label htmlFor='custom-time'>
-            <input type="text" name='custom-time' placeholder='Time, eg.: 1:19 or 79' onChange={this.inputHandleChange} id="time-input" disabled={timerActive}/>
+            <input
+              type="text"
+              name='custom-time'
+              placeholder='Time, eg.: 1:19 or 79'
+              onChange={this.inputHandleChange}
+              id="time-input" 
+              disabled={timerActive}
+            />
           </label>
           <div className='presets'>
-            <button type='button' className='blue mono' name='5' value='300' disabled={timerActive} onClick={this.presetTime}>5:00</button>
-            <button type='button' className='blue mono' name='10' value='600' disabled={timerActive} onClick={this.presetTime}>10:00</button>
-            <button type='button' className='blue mono' name='15' value='900' disabled={timerActive} onClick={this.presetTime}>15:00</button>
+            <button
+              type='button'
+              className='blue mono'
+              name='5'
+              value='300'
+              disabled={timerActive}
+              onClick={this.presetTime}
+            >
+              5:00
+            </button>
+            <button
+              type='button'
+              className='blue mono'
+              name='10'
+              value='600'
+              disabled={timerActive}
+              onClick={this.presetTime}
+            >
+              10:00
+            </button>
+            <button
+              type='button'
+              className='blue mono'
+              name='15'
+              value='900'
+              disabled={timerActive}
+              onClick={this.presetTime}
+            >
+              15:00
+            </button>
           </div>
           <div className='control-buttons'>
-            {!timerActive ? (
-              <button type='button' className='green sans' onClick={this.startTimer}>Start</button>
-            ) : (
-              <button type='button' className='red sans' onClick={this.stopTimer}>Stop</button>
-            )}
-            <button type='button' className='purple sans' onClick={this.clearState}>Reset</button>
+            <button 
+              type='button' 
+              className={`${!timerActive ? 'green' : 'red'} sans`} 
+              onClick={!timerActive ? this.startTimer : this.stopTimer}
+            >
+              {`${!timerActive ? 'Start' : 'Stop'}`}
+            </button>
+            <button
+              type='button'
+              className='purple sans'
+              onClick={this.clearState}
+            >
+              Reset
+            </button>
           </div>
         </div>
         { timerDone && <Footer />}
