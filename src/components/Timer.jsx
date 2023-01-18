@@ -14,6 +14,11 @@ export default function Timer() {
   useEffect(() => {
     displayTime()
   }, [seconds])
+
+  // manual time input
+  useEffect(() => {
+    validateAndSetTime()
+  }, [timeInput]);
   
   // timer functions
   useEffect(() => {
@@ -44,29 +49,32 @@ export default function Timer() {
     // restoreDisplayColors
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
-
+    // could use String.padLeft
     const formatMinutes = ((displayMinutes < 10) ? ('0' + displayMinutes) : displayMinutes);
     const formatSeconds = ((displaySeconds < 10) ? ('0' + displaySeconds) : displaySeconds);
     const display = `${formatMinutes}:${formatSeconds}`;
     setDisplay(display);
   };
 
+  // sets time to preset buttons
   const presetTime = ({ target: { value } }) => setSeconds(Number(value));
 
   const toggleTimer = () => seconds && setTimerActive(!timerActive);
 
   const resetTimer = () => {
     setSeconds(0);
+    setTimeInput('');
     setTimerActive(false);
+    setTimerDone(false);
   };
   
   const timerComplete = () => {
     new Audio('alarm.mp3').play();
     setDisplay('Timer complete!');
-    setTimerDone(false);
+    resetTimer();
   };
 
-  const validateTimeInput = (time) => {
+  const validateTimeInputLength = (time) => {
     const validateLength = time && time.length <= 3;
     let validateUnit = false;
     for (let i in time) {
@@ -76,11 +84,25 @@ export default function Timer() {
     return timeValidated;
   };
 
-  const handleInputChange = ({ target: { value } }) => {
-    setTimeInput(value);
-    const timeValidated = validateTimeInput(timeInput.split(':'));
-    console.log(timeValidated)
+  const validateTimeReduce = (time) => {
+    const typeOfTime = (typeof time === 'number');
+    const timeNotNegative = time >= 0;
+    return typeOfTime && timeNotNegative;
   };
+
+  const validateAndSetTime = () => {
+    const timeSplitter = timeInput.split(':');
+
+    const timeLengthValidated = validateTimeInputLength(timeSplitter);
+    if (!timeLengthValidated) return;
+  
+    const time = +timeSplitter.reduce((acc, time) => (60 * acc) + + time);
+    if (!validateTimeReduce(time)) return;
+
+    setSeconds(time);
+  };
+
+  const handleInputChange = ({ target: { value } }) => setTimeInput(value);
 
   return (
     <div className='timer-div'>
