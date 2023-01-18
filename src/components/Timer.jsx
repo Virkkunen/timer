@@ -6,7 +6,9 @@ export default function Timer() {
   const [display, setDisplay] = useState('00:00');
   const [timerDone, setTimerDone] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
-  const [timeInput, setTimeInput] = useState(null);
+  const [timeInput, setTimeInput] = useState('');
+
+  // useEffect() section
 
   // change display value
   useEffect(() => {
@@ -21,21 +23,23 @@ export default function Timer() {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
-    } else if (!timerActive) {
+    } else if (!timerActive) { // pause
       clearInterval(interval);
-    } else if (timerActive && seconds === 0) {
+    } else if (timerActive && seconds === 0) { // when it's done
       clearInterval(interval);
       setTimerActive(false);
       setTimerDone(true);
     }
     return () => clearInterval(interval);
+
   }, [timerActive, seconds]);
 
   // when timer is complete
-  useEffect(() => {
-    if (timerDone) timerComplete();
-  }, [timerDone]);
+  useEffect(() => { timerDone && timerComplete() }, [timerDone]);
 
+  // functions section
+
+  // converts seconds to display (79 to 01:19)
   const displayTime = () => {
     // restoreDisplayColors
     const displayMinutes = Math.floor(seconds / 60);
@@ -47,15 +51,9 @@ export default function Timer() {
     setDisplay(display);
   };
 
-  const presetTime = ({ target: { value } }) => {
-    const time = Number(value);
-    setSeconds(time);
-  };
+  const presetTime = ({ target: { value } }) => setSeconds(Number(value));
 
-  const toggleTimer = () => {
-    if (seconds <= 0) return console.log('Invalid time');
-    setTimerActive(!timerActive);
-  };
+  const toggleTimer = () => seconds && setTimerActive(!timerActive);
 
   const resetTimer = () => {
     setSeconds(0);
@@ -68,6 +66,22 @@ export default function Timer() {
     setTimerDone(false);
   };
 
+  const validateTimeInput = (time) => {
+    const validateLength = time && time.length <= 3;
+    let validateUnit = false;
+    for (let i in time) {
+      validateUnit = time[i].length <= 10 && time[i] >= 0;
+    }
+    const timeValidated = validateLength && validateUnit;
+    return timeValidated;
+  };
+
+  const handleInputChange = ({ target: { value } }) => {
+    setTimeInput(value);
+    const timeValidated = validateTimeInput(timeInput.split(':'));
+    console.log(timeValidated)
+  };
+
   return (
     <div className='timer-div'>
         <span id='timer'>{ display }</span>
@@ -77,9 +91,10 @@ export default function Timer() {
               type="text"
               name='custom-time'
               placeholder='Time, eg.: 1:19 or 79'
-              onChange={ () => {} }
+              onChange={ handleInputChange }
               id="time-input" 
               disabled={ timerActive }
+              value={ timeInput }
             />
           </label>
           <div className='presets'>
