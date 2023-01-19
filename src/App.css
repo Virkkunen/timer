@@ -17,22 +17,6 @@
   --purple: #cba6f7;
 }
 
-/* gruvbox hard */
-/* :root {
-  --bg0: #282828;
-  --bg1: #3c3836;
-  --bg2: #504945;
-  --bg3: #665c54;
-
-  --fg0: #fbf1c7;
-  --fg1: #ebdbb2;
-
-  --red: #fb4934;
-  --green: #b8bb26;
-  --blue: #83a598;
-  --purple: #d3869b;
-} */
-
 @media screen and (max-width: 767.9px) {
   * {
     font-size: 28px;
@@ -136,12 +120,14 @@ button {
   padding: 18px;
   color: var(--bg0);
   font-weight: bold;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 255);
+  /* box-shadow: 0 0 8px 1px rgba(0, 0, 0, 255); */
 }
 
 button:hover {
   filter: brightness(115%);
-  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 255);
+  /* box-shadow: 0 0 8px 4px rgba(0, 0, 0, 255); */
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  cursor: pointer;
 }
 
 button:active {
@@ -150,6 +136,7 @@ button:active {
 }
 
 button:disabled {
+  cursor: default;
   filter: saturate(25%) brightness(75%);
 }
 
@@ -163,6 +150,10 @@ input {
   color: var(--fg1);
   font-family: var(--mono);
   font-weight: 500;
+}
+
+input:focus {
+  outline: 2px solid var(--fg1);
 }
 
 input:disabled {
