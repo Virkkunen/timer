@@ -7,24 +7,23 @@ export default function Timer() {
   const [timerDone, setTimerDone] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
   const [timeInput, setTimeInput] = useState('');
+  const [timeValid, setTimeValid] = useState(false);
 
   // useEffect() section
-
   // change display value
-  useEffect(() => {
-    displayTime()
-  }, [seconds])
+  useEffect(() => displayTime(), [seconds]);
 
   // manual time input
-  useEffect(() => {
-    validateAndSetTime()
-  }, [timeInput]);
+  useEffect(() => validateAndSetTime(), [timeInput]);
+
+  // time valid
+  useEffect(() => { timeValid ? inputColors('restore') : inputColors('invalid') }, [timeValid]);
   
   // timer functions
   useEffect(() => {
     let interval = null;
     
-    if (timerActive && seconds > 0) {
+    if (timerActive && seconds > 0 && timeValid) {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
@@ -42,11 +41,35 @@ export default function Timer() {
   // when timer is complete
   useEffect(() => { timerDone && timerComplete() }, [timerDone]);
 
-  // functions section
+  // input colors (there is a better way of doing this)
+  const inputColors = (option) => {
+    const input = document.getElementById('time-input');
+    const timer = document.getElementById('timer');
 
+    switch (option) {
+      case 'invalid':
+        input.style.backgroundColor = 'var(--red)';
+        input.style.color = 'var(--bg0)';
+        break;
+      case 'complete':
+        timer.style.backgroundColor = 'var(--green)';
+        timer.style.color = 'var(--bg0)';
+      break;
+      case 'restore':
+        input.style.backgroundColor = 'var(--bg3)';
+        input.style.color = 'var(--fg1)';
+        timer.style.backgroundColor = 'var(--bg1)';
+        timer.style.color = 'var(--fg0)';
+        break;
+      default:
+        break;
+    };
+  };
+
+  // functions section
   // converts seconds to display (79 to 01:19)
   const displayTime = () => {
-    // restoreDisplayColors
+    inputColors('restore');
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
     // could use String.padLeft
@@ -59,7 +82,7 @@ export default function Timer() {
   // sets time to preset buttons
   const presetTime = ({ target: { value } }) => setSeconds(Number(value));
 
-  const toggleTimer = () => seconds && setTimerActive(!timerActive);
+  const toggleTimer = () => (seconds && timeValid) && setTimerActive(!timerActive);
 
   const resetTimer = () => {
     setSeconds(0);
@@ -71,6 +94,7 @@ export default function Timer() {
   const timerComplete = () => {
     new Audio('alarm.mp3').play();
     setDisplay('Timer complete!');
+    inputColors('complete');
     resetTimer();
   };
 
@@ -81,13 +105,16 @@ export default function Timer() {
       validateUnit = time[i].length <= 10 && time[i] >= 0;
     }
     const timeValidated = validateLength && validateUnit;
+    setTimeValid(timeValidated);
     return timeValidated;
   };
 
   const validateTimeReduce = (time) => {
     const typeOfTime = (typeof time === 'number');
     const timeNotNegative = time >= 0;
-    return typeOfTime && timeNotNegative;
+    const reduceValidated = typeOfTime && timeNotNegative;
+    setTimeValid(reduceValidated);
+    return reduceValidated;
   };
 
   const validateAndSetTime = () => {
