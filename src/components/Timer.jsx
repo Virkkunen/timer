@@ -9,27 +9,6 @@ export default function Timer() {
   const [timeInput, setTimeInput] = useState('');
   const [timeValid, setTimeValid] = useState(false);
 
- 
-  
-  // timer functions
-  useEffect(() => {
-    let interval = null;
-    
-    if (timerActive && seconds > 0 && timeValid) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds - 1);
-      }, 1000);
-    } else if (!timerActive) { // pause
-      clearInterval(interval);
-    } else if (timerActive && seconds === 0) { // when it's done
-      clearInterval(interval);
-      setTimerActive(false);
-      setTimerDone(true);
-    }
-    return () => clearInterval(interval);
-
-  }, [timerActive, seconds, timeValid]);
-
   // input colors (there is a better way of doing this)
   const inputColors = useCallback((option) => {
     const input = document.getElementById('time-input');
@@ -69,23 +48,23 @@ export default function Timer() {
   }, [inputColors, seconds]);
 
   // sets time to preset buttons
-  const presetTime = ({ target: { value } }) => setSeconds(Number(value));
+  const presetTime = useCallback(({ target: { value } }) => setSeconds(Number(value)), []);
 
-  const toggleTimer = () => (seconds && timeValid) && setTimerActive(!timerActive);
+  const toggleTimer = useCallback(() => (seconds && timeValid) && setTimerActive(!timerActive), [ seconds, timeValid, timerActive]);
 
   const resetTimer = useCallback(() => {
     setSeconds(0);
     setTimeInput('');
     setTimerActive(false);
     setTimerDone(false);
-  }, [setSeconds, setTimeInput, setTimerActive, setTimerDone]);
+  }, []);
   
   const timerComplete = useCallback(() => {
     new Audio('alarm.mp3').play();
     setDisplay('Timer complete!');
     inputColors('complete');
     resetTimer();
-  }, [setDisplay, inputColors, resetTimer]);
+  }, [inputColors, resetTimer]);
 
   const validateTimeInputLength = useCallback((time) => {
     const validateLength = time && time.length <= 3;
@@ -96,7 +75,7 @@ export default function Timer() {
     const timeValidated = validateLength && validateUnit;
     setTimeValid(timeValidated);
     return timeValidated;
-  }, [setTimeValid]);
+  }, []);
 
   const validateTimeReduce = useCallback((time) => {
     const typeOfTime = (typeof time === 'number');
@@ -104,7 +83,7 @@ export default function Timer() {
     const reduceValidated = typeOfTime && timeNotNegative;
     setTimeValid(reduceValidated);
     return reduceValidated;
-  }, [setTimeValid]);
+  }, []);
 
   const validateAndSetTime = useCallback(() => {
     const timeSplitter = timeInput.split(':');
@@ -116,9 +95,9 @@ export default function Timer() {
     if (!validateTimeReduce(time)) return;
 
     setSeconds(time);
-  }, [validateTimeInputLength, validateTimeReduce, setSeconds, timeInput]);
+  }, [validateTimeInputLength, validateTimeReduce, timeInput]);
 
-  const handleInputChange = useCallback(({ target: { value } }) => setTimeInput(value), [setTimeInput]);
+  const handleInputChange = useCallback(({ target: { value } }) => setTimeInput(value), []);
 
   // when timer is complete
   useEffect(() => { timerDone && timerComplete() }, [timerDone, timerComplete]);
@@ -131,6 +110,25 @@ export default function Timer() {
 
   // time valid
   useEffect(() => { timeValid ? inputColors('restore') : inputColors('invalid') }, [timeValid, inputColors]);
+
+  // interval
+  useEffect(() => {
+    let interval = null;
+    
+    if (timerActive && seconds > 0 && timeValid) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds - 1);
+      }, 1000);
+    } else if (!timerActive) { // pause
+      clearInterval(interval);
+    } else if (timerActive && seconds === 0) { // when it's done
+      clearInterval(interval);
+      setTimerActive(false);
+      setTimerDone(true);
+    }
+    return () => clearInterval(interval);
+
+  }, [timerActive, seconds, timeValid]);
 
   return (
     <div className='timer-div'>
