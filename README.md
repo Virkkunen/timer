@@ -61,7 +61,7 @@ React, React hooks, homebrewed CSS styles
 
 
 ## To Do
-- [ ] Use useMemo and useCallback for optimizations
+- [x] Use useMemo and useCallback for optimizations
 - [ ] Better handling of CSS styles on inputs
 - [ ] Display hours instead of minutes
 - [ ] Convert hour input (1h19, 1h19m5s)
