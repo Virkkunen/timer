@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Footer from './Footer';
 
 export default function Timer() {
@@ -9,15 +9,7 @@ export default function Timer() {
   const [timeInput, setTimeInput] = useState('');
   const [timeValid, setTimeValid] = useState(false);
 
-  // useEffect() section
-  // change display value
-  useEffect(() => displayTime(), [seconds]);
-
-  // manual time input
-  useEffect(() => validateAndSetTime(), [timeInput]);
-
-  // time valid
-  useEffect(() => { timeValid ? inputColors('restore') : inputColors('invalid') }, [timeValid]);
+ 
   
   // timer functions
   useEffect(() => {
@@ -36,13 +28,10 @@ export default function Timer() {
     }
     return () => clearInterval(interval);
 
-  }, [timerActive, seconds]);
-
-  // when timer is complete
-  useEffect(() => { timerDone && timerComplete() }, [timerDone]);
+  }, [timerActive, seconds, timeValid]);
 
   // input colors (there is a better way of doing this)
-  const inputColors = (option) => {
+  const inputColors = useCallback((option) => {
     const input = document.getElementById('time-input');
     const timer = document.getElementById('timer');
 
@@ -64,11 +53,11 @@ export default function Timer() {
       default:
         break;
     };
-  };
+  }, []);
 
   // functions section
   // converts seconds to display (79 to 01:19)
-  const displayTime = () => {
+  const displayTime = useCallback(() => {
     inputColors('restore');
     const displayMinutes = Math.floor(seconds / 60);
     const displaySeconds = seconds % 60;
@@ -77,28 +66,28 @@ export default function Timer() {
     const formatSeconds = ((displaySeconds < 10) ? ('0' + displaySeconds) : displaySeconds);
     const display = `${formatMinutes}:${formatSeconds}`;
     setDisplay(display);
-  };
+  }, [inputColors, seconds]);
 
   // sets time to preset buttons
   const presetTime = ({ target: { value } }) => setSeconds(Number(value));
 
   const toggleTimer = () => (seconds && timeValid) && setTimerActive(!timerActive);
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     setSeconds(0);
     setTimeInput('');
     setTimerActive(false);
     setTimerDone(false);
-  };
+  }, [setSeconds, setTimeInput, setTimerActive, setTimerDone]);
   
-  const timerComplete = () => {
+  const timerComplete = useCallback(() => {
     new Audio('alarm.mp3').play();
     setDisplay('Timer complete!');
     inputColors('complete');
     resetTimer();
-  };
+  }, [setDisplay, inputColors, resetTimer]);
 
-  const validateTimeInputLength = (time) => {
+  const validateTimeInputLength = useCallback((time) => {
     const validateLength = time && time.length <= 3;
     let validateUnit = false;
     for (let i in time) {
@@ -107,17 +96,17 @@ export default function Timer() {
     const timeValidated = validateLength && validateUnit;
     setTimeValid(timeValidated);
     return timeValidated;
-  };
+  }, [setTimeValid]);
 
-  const validateTimeReduce = (time) => {
+  const validateTimeReduce = useCallback((time) => {
     const typeOfTime = (typeof time === 'number');
     const timeNotNegative = time >= 0;
     const reduceValidated = typeOfTime && timeNotNegative;
     setTimeValid(reduceValidated);
     return reduceValidated;
-  };
+  }, [setTimeValid]);
 
-  const validateAndSetTime = () => {
+  const validateAndSetTime = useCallback(() => {
     const timeSplitter = timeInput.split(':');
 
     const timeLengthValidated = validateTimeInputLength(timeSplitter);
@@ -127,9 +116,21 @@ export default function Timer() {
     if (!validateTimeReduce(time)) return;
 
     setSeconds(time);
-  };
+  }, [validateTimeInputLength, validateTimeReduce, setSeconds, timeInput]);
 
-  const handleInputChange = ({ target: { value } }) => setTimeInput(value);
+  const handleInputChange = useCallback(({ target: { value } }) => setTimeInput(value), [setTimeInput]);
+
+  // when timer is complete
+  useEffect(() => { timerDone && timerComplete() }, [timerDone, timerComplete]);
+
+  // change display value
+  useEffect(() => displayTime(), [seconds, displayTime]);
+
+  // manual time input
+  useEffect(() => validateAndSetTime(), [timeInput, validateAndSetTime]);
+
+  // time valid
+  useEffect(() => { timeValid ? inputColors('restore') : inputColors('invalid') }, [timeValid, inputColors]);
 
   return (
     <div className='timer-div'>
@@ -163,7 +164,7 @@ export default function Timer() {
               name='10'
               value='600'
               disabled={ timerActive }
-              onClick={ presetTime}
+              onClick={ presetTime }
             >
               10:00
             </button>
