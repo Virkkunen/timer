@@ -8,6 +8,8 @@ const TimeContext = createContext<TimeContextInterface>({
   setTimeInput: (arg0: string) => {},
   validTime: true,
   presetTime: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {},
+  timerActive: false,
+  setTimerActive: () => {},
 });
 
 export default TimeContext;

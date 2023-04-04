@@ -3,7 +3,7 @@ import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
-  const { seconds, display, timeInput, setTimeInput, validTime, presetTime } =
+  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive } =
     useContext(TimeContext);
 
   // event: ChangeEvent<HTMLInputElement>

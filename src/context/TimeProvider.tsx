@@ -11,6 +11,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   const [display, setDisplay] = useState('00:00');
   const [timeInput, setTimeInput] = useState('');
   const [validTime, setValidTime] = useState(true);
+  const [timerActive, setTimerActive] = useState(false);
 
   // validates and sets seconds state
   useEffect(() => {
@@ -19,7 +20,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       setValidTime(false);
       return;
     }
-    setValidTime(true);
+    setValidTime(true); // in case an invalid value was provided first
     const reducedTime = validateTimeReducer(timeSplitter);
     setSeconds(reducedTime);
   }, [timeInput]);
@@ -42,8 +43,19 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       setTimeInput,
       validTime,
       presetTime,
+      timerActive,
+      setTimerActive,
     }),
-    [seconds, display, timeInput, setTimeInput, validTime, presetTime]
+    [
+      seconds,
+      display,
+      timeInput,
+      setTimeInput,
+      validTime,
+      presetTime,
+      timerActive,
+      setTimerActive,
+    ]
   );
 
   return <TimeContext.Provider value={value}>{children}</TimeContext.Provider>;
