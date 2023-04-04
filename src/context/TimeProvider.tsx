@@ -4,6 +4,7 @@ import TimeContext from './TimeContext';
 import validateTimeLength from '../utils/validateTimeLength';
 import validateTimeReducer from '../utils/validateTimeReducer';
 import validateNumber from '../utils/validateNumber';
+import formatSecondsToDisplay from '../utils/formatSecondsToDisplay';
 
 const TimeProvider: React.FC<Props> = ({ children }) => {
   const [seconds, setSeconds] = useState(0);
@@ -11,6 +12,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   const [timeInput, setTimeInput] = useState('');
   const [validTime, setValidTime] = useState(true);
 
+  // validates and sets seconds state
   useEffect(() => {
     const timeSplitter = timeInput.split(':').map(Number);
     if (!validateNumber(timeSplitter) || !validateTimeLength(timeSplitter)) {
@@ -21,6 +23,11 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     const reducedTime = validateTimeReducer(timeSplitter);
     setSeconds(reducedTime);
   }, [timeInput]);
+
+  // converts seconds to display
+  useEffect(() => {
+    setDisplay(formatSecondsToDisplay(seconds))
+  }, [seconds]);
 
   const value = useMemo(
     () => ({

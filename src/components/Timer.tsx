@@ -17,7 +17,7 @@ const Timer = () => {
   return (
     <main className='flex flex-col max-lg:max-w-xs mx-auto bg-crust p-8 pb-2 rounded-lg md:max-w-lg md:p-10 md:pb-4'>
       <div className='bg-surface0 p-4 py-8 mb-8 text-center rounded-lg'>
-        <span className='font-mono font-medium text-6xl'>{seconds}</span>
+        <span className='font-mono font-medium text-6xl'>{display}</span>
       </div>
       <div className='grid grid-rows-3 gap-4 place-items-center mb-6 max-lg:place-content-center md:gap-6'>
         <input
