@@ -1,7 +1,7 @@
 
 # Timer
 
-A simple timer made with React
+A simple timer made with React, TypeScript and TailwindCSS
 
 
 ## Features
@@ -9,7 +9,7 @@ A simple timer made with React
 - Custom time input `(1:19, 79)`
 - Preset buttons 
 - Alarm sound when timer is complete
-- Mobile responsive
+- Responsive layout
 
 
 ## Screenshots
@@ -40,13 +40,13 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install
+  npm i
 ```
 
 Start the server
 
 ```bash
-  npm start
+  npm run dev
 ```
 
 
@@ -57,11 +57,9 @@ Start the server
 
 ## Tech Stack
 
-React, React hooks, homebrewed CSS styles
+React, Vite, TypeScript, TailwindCSS
 
 
 ## To Do
-- [x] Use useMemo and useCallback for optimizations
-- [ ] Better handling of CSS styles on inputs
 - [ ] Display hours instead of minutes
 - [ ] Convert hour input (1h19, 1h19m5s)
