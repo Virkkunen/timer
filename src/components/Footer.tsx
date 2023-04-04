@@ -2,7 +2,7 @@ import { FaCode, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className='text-subtext0 flex p-4 justify-center shadow-md text-sm'>
+    <footer className='text-subtext0 flex flex-row justify-center p-4 text-sm my-0'>
       <a
           href='https://github.com/Virkkunen'
           target="_blank"
