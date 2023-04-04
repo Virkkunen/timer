@@ -64,6 +64,12 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     setTimerActive(!timerActive);
   }, [seconds, validTime, timerActive]);
 
+  const resetTimer = useCallback(() => {
+    setTimeInput('');
+    setValidTime(true);
+    setSeconds(0);
+  }, []);
+
   const value = useMemo(
     () => ({
       seconds,
@@ -75,6 +81,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       timerActive,
       setTimerActive,
       toggleTimer,
+      resetTimer,
     }),
     [
       seconds,
@@ -86,6 +93,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       timerActive,
       setTimerActive,
       toggleTimer,
+      resetTimer,
     ]
   );
 

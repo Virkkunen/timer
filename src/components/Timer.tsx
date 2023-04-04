@@ -3,8 +3,17 @@ import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
-  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive, toggleTimer } =
-    useContext(TimeContext);
+  const {
+    seconds,
+    display,
+    timeInput,
+    setTimeInput,
+    validTime,
+    presetTime,
+    timerActive,
+    toggleTimer,
+    resetTimer,
+  } = useContext(TimeContext);
 
   // event: ChangeEvent<HTMLInputElement>
   const handleInputChange = useCallback(
@@ -29,7 +38,7 @@ const Timer = () => {
         <input
           type='text'
           name='custom-time'
-          placeholder='1:19'
+          placeholder='1:19 or 79'
           onChange={handleInputChange}
           disabled={timerActive}
           value={timeInput}
@@ -43,7 +52,9 @@ const Timer = () => {
         <div className='grid grid-cols-3 grid-rows-1 gap-4 md:gap-6'>
           <button
             type='button'
-            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${
+              timerActive ? '' : 'hover:brightness-110 active:opacity-60'
+            } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='5'
             value='300'
             disabled={timerActive}
@@ -53,7 +64,9 @@ const Timer = () => {
           </button>
           <button
             type='button'
-            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${
+              timerActive ? '' : 'hover:brightness-110 active:opacity-60'
+            } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='10'
             value='600'
             disabled={timerActive}
@@ -63,7 +76,9 @@ const Timer = () => {
           </button>
           <button
             type='button'
-            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${
+              timerActive ? '' : 'hover:brightness-110 active:opacity-60'
+            } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='15'
             value='900'
             disabled={timerActive}
@@ -76,8 +91,10 @@ const Timer = () => {
           <button
             type='button'
             onClick={toggleTimer}
-            className={`${timerActive ? 'bg-red' : 'bg-green'} font-medium px-4 py-3 rounded-lg text-base ${
-              validTime || seconds && 'hover:brightness-110 active:opacity-60'
+            className={`${
+              timerActive ? 'bg-red' : 'bg-green'
+            } font-medium px-4 py-3 rounded-lg text-base ${
+              validTime || (seconds && 'hover:brightness-110 active:opacity-60')
             } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             disabled={!validTime || !seconds}
           >
@@ -85,7 +102,7 @@ const Timer = () => {
           </button>
           <button
             type='button'
-            onClick={() => console.log('resetTimer')}
+            onClick={resetTimer}
             className='bg-mauve font-medium px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
           >
             Reset

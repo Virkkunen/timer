@@ -11,6 +11,7 @@ const TimeContext = createContext<TimeContextInterface>({
   timerActive: false,
   setTimerActive: () => {},
   toggleTimer: () => {},
+  resetTimer: () => {},
 });
 
 export default TimeContext;

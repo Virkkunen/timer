@@ -12,4 +12,5 @@ export interface TimeContextInterface {
   timerActive: boolean;
   setTimerActive: (arg0: boolean) => void;
   toggleTimer: () => void;
+  resetTimer: () => void;
 }
