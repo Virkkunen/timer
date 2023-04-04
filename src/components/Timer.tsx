@@ -3,7 +3,7 @@ import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
-  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive } =
+  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive, startTimer } =
     useContext(TimeContext);
 
   // event: ChangeEvent<HTMLInputElement>
@@ -31,42 +31,42 @@ const Timer = () => {
           name='custom-time'
           placeholder='1:19'
           onChange={handleInputChange}
-          disabled={false}
+          disabled={timerActive}
           value={timeInput}
           className={`form-input font-mono font-medium text-lg text-center mt-0 block w-full md:mx-auto px-2 py-3 border-0 border-blue focus:ring-0 ${
             validTime
               ? 'focus:bg-surface1 bg-surface0'
               : 'focus:bg-red bg-red text-crust caret-peach'
-          } rounded-lg caret-lavender transition-all ease-in-out duration-200 md:w-10/12`}
+          } disabled:bg-mantle disabled:text-surface1 rounded-lg caret-lavender transition-all ease-in-out duration-200 md:w-10/12`}
           autoFocus
         />
         <div className='grid grid-cols-3 grid-rows-1 gap-4 md:gap-6'>
           <button
             type='button'
-            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='5'
             value='300'
-            disabled={false}
+            disabled={timerActive}
             onClick={presetTime}
           >
             5:00
           </button>
           <button
             type='button'
-            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='10'
             value='600'
-            disabled={false}
+            disabled={timerActive}
             onClick={presetTime}
           >
             10:00
           </button>
           <button
             type='button'
-            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className={`bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base ${timerActive ? '' : 'hover:brightness-110 active:opacity-60'} disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             name='15'
             value='900'
-            disabled={false}
+            disabled={timerActive}
             onClick={presetTime}
           >
             15:00
@@ -76,12 +76,12 @@ const Timer = () => {
           <button
             type='button'
             onClick={() => console.log('toggleTimer')}
-            className={`bg-green font-medium px-4 py-3 rounded-lg text-base ${
+            className={`${timerActive ? 'bg-red' : 'bg-green'} font-medium px-4 py-3 rounded-lg text-base ${
               validTime && 'hover:brightness-110 active:opacity-60'
             } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
             disabled={!validTime}
           >
-            Start
+            {timerActive ? 'Stop' : 'Start'}
           </button>
           <button
             type='button'

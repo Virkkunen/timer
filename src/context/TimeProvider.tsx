@@ -35,6 +35,10 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     setTimeInput('');
   };
 
+  const startTimer = () => {
+    setTimerActive(true);
+  };
+
   const value = useMemo(
     () => ({
       seconds,
@@ -45,6 +49,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       presetTime,
       timerActive,
       setTimerActive,
+      startTimer,
     }),
     [
       seconds,
@@ -55,6 +60,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       presetTime,
       timerActive,
       setTimerActive,
+      startTimer,
     ]
   );
 

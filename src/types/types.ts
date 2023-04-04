@@ -11,4 +11,5 @@ export interface TimeContextInterface {
   presetTime: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   timerActive: boolean;
   setTimerActive: (arg0: boolean) => void;
+  startTimer: () => void;
 }
