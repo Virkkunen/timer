@@ -3,7 +3,8 @@ import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
-  const { seconds, display, timeInput, setTimeInput } = useContext(TimeContext);
+  const { seconds, display, timeInput, setTimeInput, validTime } =
+    useContext(TimeContext);
 
   // event: ChangeEvent<HTMLInputElement>
   const handleInputChange = useCallback(
@@ -16,7 +17,7 @@ const Timer = () => {
   return (
     <main className='flex flex-col max-lg:max-w-xs mx-auto bg-crust p-8 pb-2 rounded-lg md:max-w-lg md:p-10 md:pb-4'>
       <div className='bg-surface0 p-4 py-8 mb-8 text-center rounded-lg'>
-        <span className='font-mono font-medium text-6xl'>{display}</span>
+        <span className='font-mono font-medium text-6xl'>{seconds}</span>
       </div>
       <div className='grid grid-rows-3 gap-4 place-items-center mb-6 max-lg:place-content-center md:gap-6'>
         <input
@@ -32,7 +33,7 @@ const Timer = () => {
         <div className='grid grid-cols-3 grid-rows-1 gap-4 md:gap-6'>
           <button
             type='button'
-            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
             name='5'
             value='300'
             disabled={false}
@@ -45,14 +46,14 @@ const Timer = () => {
             className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
             name='10'
             value='600'
-            disabled={true}
+            disabled={false}
             onClick={() => console.log('presetTime')}
           >
             10:00
           </button>
           <button
             type='button'
-            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className='bg-blue font-mono font-bold px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
             name='15'
             value='900'
             disabled={false}
@@ -65,7 +66,10 @@ const Timer = () => {
           <button
             type='button'
             onClick={() => console.log('toggleTimer')}
-            className='bg-green font-medium px-4 py-3 rounded-lg text-base hover:brightness-110 active:opacity-60 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg'
+            className={`bg-green font-medium px-4 py-3 rounded-lg text-base ${
+              validTime && 'hover:brightness-110 active:opacity-60'
+            } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
+            disabled={!validTime}
           >
             Start
           </button>

@@ -6,6 +6,7 @@ const TimeContext = createContext<TimeContextInterface>({
   display: '00:00',
   timeInput: undefined,
   setTimeInput: (arg0: string) => {},
+  validTime: true,
 });
 
 export default TimeContext;

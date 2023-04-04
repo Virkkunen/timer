@@ -7,4 +7,5 @@ export interface TimeContextInterface {
   display: string;
   timeInput: string | undefined;
   setTimeInput: (arg0: string) => void;
+  validTime: boolean;
 }
