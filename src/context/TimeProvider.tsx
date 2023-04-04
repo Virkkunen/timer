@@ -20,7 +20,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   // validates and sets seconds state
   useEffect(() => {
     if (!timeInput) return;
-    const timeSplitter = timeInput.split(':').map(Number);
+    const timeSplitter = timeInput.split(':').map((num) => Math.round(Number(num)));
     if (!validateNumber(timeSplitter) || !validateTimeLength(timeSplitter)) {
       setValidTime(false);
       return;
