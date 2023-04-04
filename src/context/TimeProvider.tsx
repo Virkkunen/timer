@@ -61,7 +61,6 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
 
   const toggleTimer = useCallback(() => {
     if (!seconds || !validTime) return;
-
     setTimerActive(!timerActive);
   }, [seconds, validTime, timerActive]);
 

@@ -77,9 +77,9 @@ const Timer = () => {
             type='button'
             onClick={toggleTimer}
             className={`${timerActive ? 'bg-red' : 'bg-green'} font-medium px-4 py-3 rounded-lg text-base ${
-              validTime && 'hover:brightness-110 active:opacity-60'
+              validTime || seconds && 'hover:brightness-110 active:opacity-60'
             } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
-            disabled={!validTime}
+            disabled={!validTime || !seconds}
           >
             {timerActive ? 'Stop' : 'Start'}
           </button>
