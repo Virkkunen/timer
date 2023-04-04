@@ -1,20 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import Footer from './Footer';
+import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
+  const { seconds, display, timeInput, setTimeInput } = useContext(TimeContext);
+
+  // event: ChangeEvent<HTMLInputElement>
+  const handleInputChange = useCallback(
+    ({ target: { value } }: { target: { value: string } }) => {
+      setTimeInput(value);
+    },
+    [timeInput]
+  );
+
   return (
     <main className='flex flex-col max-lg:max-w-xs mx-auto bg-crust p-8 pb-2 rounded-lg md:max-w-lg md:p-10 md:pb-4'>
       <div className='bg-surface0 p-4 py-8 mb-8 text-center rounded-lg'>
-        <span className='font-mono font-medium text-6xl'>00:00</span>
+        <span className='font-mono font-medium text-6xl'>{display}</span>
       </div>
       <div className='grid grid-rows-3 gap-4 place-items-center mb-6 max-lg:place-content-center md:gap-6'>
         <input
           type='text'
           name='custom-time'
           placeholder='1:19'
-          onChange={() => console.log('handleInputChange')}
+          onChange={handleInputChange}
           disabled={false}
-          value=''
+          value={timeInput}
           className='form-input mt-0 block w-full md:mx-auto p-2 border-0 border-blue focus:ring-0 focus:bg-surface1 bg-surface0 rounded-lg caret-lavender transition-all ease-in-out duration-200 md:w-10/12'
           autoFocus
         />
