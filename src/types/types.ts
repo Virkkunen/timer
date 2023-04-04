@@ -15,6 +15,8 @@ export interface TimeContextInterface {
   resetTimer: () => void;
   setValidTime: (arg0: boolean) => void;
   setSeconds: (arg0: number) => void;
+  timerDone: boolean;
+  setTimerDone: (arg0: boolean) => void;
 }
 
 export interface ButtonState {

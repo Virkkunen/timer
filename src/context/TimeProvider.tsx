@@ -40,11 +40,13 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     let timerInterval: number | undefined;
 
     if (timerActive && seconds > 0 && validTime) {
-      timerInterval = setInterval(() => setSeconds((seconds) => seconds - 1), 1000);
+      timerInterval = setInterval(
+        () => setSeconds((seconds) => seconds - 1),
+        1000
+      );
     }
 
     return () => clearInterval(timerInterval);
-
   }, [timerActive, seconds]);
 
   // the timer handler
@@ -70,6 +72,8 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       resetTimer,
       setValidTime,
       setSeconds,
+      timerDone,
+      setTimerDone,
     }),
     [
       seconds,
@@ -84,6 +88,8 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       resetTimer,
       setValidTime,
       setSeconds,
+      timerDone,
+      setTimerDone,
     ]
   );
 
