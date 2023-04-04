@@ -15,6 +15,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
 
   // validates and sets seconds state
   useEffect(() => {
+    if (!timeInput) return;
     const timeSplitter = timeInput.split(':').map(Number);
     if (!validateNumber(timeSplitter) || !validateTimeLength(timeSplitter)) {
       setValidTime(false);
@@ -31,8 +32,9 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   }, [seconds]);
 
   const presetTime = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSeconds(+e.currentTarget.value);
     setTimeInput('');
+    setValidTime(true);
+    setSeconds(+e.currentTarget.value);
   };
 
   const startTimer = () => {
