@@ -1,11 +1,31 @@
-import { useContext, Fragment, useCallback } from 'react';
+import { useContext, Fragment, useCallback, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import TimeContext from '../context/TimeContext';
 
 const DoneDialog = () => {
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const { timerDone, setTimerDone } = useContext(TimeContext);
 
-  const closeDialog = useCallback(() => setTimerDone(false), [timerDone]);
+  const closeDialog = useCallback(() => {
+    audio!.pause();
+    setAudio(null);
+    setTimerDone(false);
+  }, [timerDone]);
+
+  useEffect(() => {
+    const audioEl = new Audio('alarm.mp3');
+    setAudio(audioEl);
+
+    // clean up when unmounting
+    return () => {
+      audioEl.pause();
+      audioEl.src = '';
+    };
+  }, [timerDone]);
+
+  useEffect(() => {
+    if (timerDone && audio) audio.play();
+  }, [timerDone, audio]);
 
   return (
     <Transition show={timerDone} as={Fragment}>
