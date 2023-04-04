@@ -1,6 +1,7 @@
 import { useCallback, useContext } from 'react';
 import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
+import { useButton } from '../hooks/useButton';
 
 const Timer = () => {
   const {
@@ -9,12 +10,10 @@ const Timer = () => {
     timeInput,
     setTimeInput,
     validTime,
-    presetTime,
     timerActive,
-    toggleTimer,
-    resetTimer,
   } = useContext(TimeContext);
-
+  
+  const { presetTime, toggleTimer, resetTimer } = useButton();
   // event: ChangeEvent<HTMLInputElement>
   const handleInputChange = useCallback(
     ({ target: { value } }: { target: { value: string } }) => {

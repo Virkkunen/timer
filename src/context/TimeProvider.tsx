@@ -5,6 +5,7 @@ import validateTimeLength from '../utils/validateTimeLength';
 import validateTimeReducer from '../utils/validateTimeReducer';
 import validateNumber from '../utils/validateNumber';
 import formatSecondsToDisplay from '../utils/formatSecondsToDisplay';
+import { useButton } from '../hooks/useButton';
 
 const TimeProvider: React.FC<Props> = ({ children }) => {
   const [seconds, setSeconds] = useState(0);
@@ -13,6 +14,8 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   const [validTime, setValidTime] = useState(true);
   const [timerActive, setTimerActive] = useState(false);
   const [timerDone, setTimerDone] = useState(false);
+
+  const { presetTime, toggleTimer, resetTimer } = useButton();
 
   // validates and sets seconds state
   useEffect(() => {
@@ -53,23 +56,6 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     }
   }, [seconds, timerActive]);
 
-  const presetTime = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setTimeInput('');
-    setValidTime(true);
-    setSeconds(+e.currentTarget.value);
-  }, []);
-
-  const toggleTimer = useCallback(() => {
-    if (!seconds || !validTime) return;
-    setTimerActive(!timerActive);
-  }, [seconds, validTime, timerActive]);
-
-  const resetTimer = useCallback(() => {
-    setTimeInput('');
-    setValidTime(true);
-    setSeconds(0);
-  }, []);
-
   const value = useMemo(
     () => ({
       seconds,
@@ -82,6 +68,8 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       setTimerActive,
       toggleTimer,
       resetTimer,
+      setValidTime,
+      setSeconds,
     }),
     [
       seconds,
@@ -94,6 +82,8 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       setTimerActive,
       toggleTimer,
       resetTimer,
+      setValidTime,
+      setSeconds,
     ]
   );
 
