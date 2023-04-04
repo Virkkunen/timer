@@ -1,15 +1,19 @@
 
 # Timer
 
-A simple timer made with React
+A simple timer made with React, TypeScript and TailwindCSS
 
+<img alt="GitHub Package.json Version" src="https://img.shields.io/github/package-json/v/virkkunen/timer" /> <img alt="Github License" src="https://img.shields.io/github/license/virkkunen/timer" />
+<br><br>
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/virkkunen/timer" /> <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/virkkunen/timer" />
+<br><br>
 
 ## Features
 
 - Custom time input `(1:19, 79)`
 - Preset buttons 
 - Alarm sound when timer is complete
-- Mobile responsive
+- Responsive layout
 
 
 ## Screenshots
@@ -40,13 +44,13 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install
+  npm i
 ```
 
 Start the server
 
 ```bash
-  npm start
+  npm run dev
 ```
 
 
@@ -57,11 +61,4 @@ Start the server
 
 ## Tech Stack
 
-React, React hooks, homebrewed CSS styles
-
-
-## To Do
-- [x] Use useMemo and useCallback for optimizations
-- [ ] Better handling of CSS styles on inputs
-- [ ] Display hours instead of minutes
-- [ ] Convert hour input (1h19, 1h19m5s)
+React, Vite, TypeScript, TailwindCSS
