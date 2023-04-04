@@ -27,7 +27,7 @@ const Timer = () => {
           onChange={handleInputChange}
           disabled={false}
           value={timeInput}
-          className='form-input font-mono text-center mt-0 block w-full md:mx-auto p-2 border-0 border-blue focus:ring-0 focus:bg-surface1 bg-surface0 rounded-lg caret-lavender transition-all ease-in-out duration-200 md:w-10/12'
+          className={`form-input font-mono font-medium text-lg text-center mt-0 block w-full md:mx-auto px-2 py-3 border-0 border-blue focus:ring-0 ${validTime ? 'focus:bg-surface1 bg-surface0' : 'focus:bg-red bg-red text-crust caret-peach'} rounded-lg caret-lavender transition-all ease-in-out duration-200 md:w-10/12`}
           autoFocus
         />
         <div className='grid grid-cols-3 grid-rows-1 gap-4 md:gap-6'>

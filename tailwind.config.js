@@ -8,7 +8,7 @@ export default {
     extend: {},
     fontFamily: {
       sans: ['Fira Sans', 'sans-serif'],
-      mono: ['Fira Code NF', 'monospace']
+      mono: ['Fira Code', 'monospace']
     }
   },
   plugins: [
