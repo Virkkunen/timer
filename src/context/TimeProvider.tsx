@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Props } from '../types/types';
 import TimeContext from './TimeContext';
 import validateTimeLength from '../utils/validateTimeLength';
@@ -12,6 +12,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   const [timeInput, setTimeInput] = useState('');
   const [validTime, setValidTime] = useState(true);
   const [timerActive, setTimerActive] = useState(false);
+  const [timerDone, setTimerDone] = useState(false);
 
   // validates and sets seconds state
   useEffect(() => {
@@ -31,15 +32,38 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     setDisplay(formatSecondsToDisplay(seconds));
   }, [seconds]);
 
-  const presetTime = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  // the timer interval
+  useEffect(() => {
+    let timerInterval: number | undefined;
+
+    if (timerActive && seconds > 0 && validTime) {
+      timerInterval = setInterval(() => setSeconds((seconds) => seconds - 1), 1000);
+    }
+
+    return () => clearInterval(timerInterval);
+
+  }, [timerActive, seconds]);
+
+  // the timer handler
+  useEffect(() => {
+    if (seconds === 0 && timerActive) {
+      setTimerActive(false);
+      setTimerDone(true);
+      setTimeInput('');
+    }
+  }, [seconds, timerActive]);
+
+  const presetTime = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setTimeInput('');
     setValidTime(true);
     setSeconds(+e.currentTarget.value);
-  };
+  }, []);
 
-  const startTimer = () => {
-    setTimerActive(true);
-  };
+  const toggleTimer = useCallback(() => {
+    if (!seconds || !validTime) return;
+
+    setTimerActive(!timerActive);
+  }, [seconds, validTime, timerActive]);
 
   const value = useMemo(
     () => ({
@@ -51,7 +75,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       presetTime,
       timerActive,
       setTimerActive,
-      startTimer,
+      toggleTimer,
     }),
     [
       seconds,
@@ -62,7 +86,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       presetTime,
       timerActive,
       setTimerActive,
-      startTimer,
+      toggleTimer,
     ]
   );
 

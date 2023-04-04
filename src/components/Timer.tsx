@@ -3,7 +3,7 @@ import Footer from './Footer';
 import TimeContext from '../context/TimeContext';
 
 const Timer = () => {
-  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive, startTimer } =
+  const { seconds, display, timeInput, setTimeInput, validTime, presetTime, timerActive, toggleTimer } =
     useContext(TimeContext);
 
   // event: ChangeEvent<HTMLInputElement>
@@ -75,7 +75,7 @@ const Timer = () => {
         <div className='grid grid-cols-2 gap-4'>
           <button
             type='button'
-            onClick={() => console.log('toggleTimer')}
+            onClick={toggleTimer}
             className={`${timerActive ? 'bg-red' : 'bg-green'} font-medium px-4 py-3 rounded-lg text-base ${
               validTime && 'hover:brightness-110 active:opacity-60'
             } disabled:bg-overlay2 disabled:text-surface1 transition-all ease-in-out duration-200 md:px-6 md:py-4 md:text-lg`}
