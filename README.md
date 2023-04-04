@@ -3,11 +3,9 @@
 
 A simple timer made with React, TypeScript and TailwindCSS
 
-<img alt="GitHub Package.json Version" src="https://img.shields.io/github/package-json/v/virkkunen/timer" />
-<img alt="Github License" src="https://img.shields.io/github/license/virkkunen/timer" />
+<img alt="GitHub Package.json Version" src="https://img.shields.io/github/package-json/v/virkkunen/timer" /> <img alt="Github License" src="https://img.shields.io/github/license/virkkunen/timer" />
 <br><br>
-<img alt="GitHub Issues" src="https://img.shields.io/github/issues/virkkunen/timer" />
-<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/virkkunen/timer" />
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/virkkunen/timer" /> <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/virkkunen/timer" />
 <br><br>
 
 ## Features
