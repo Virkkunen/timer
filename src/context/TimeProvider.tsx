@@ -18,7 +18,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
     if (!validateNumber(timeSplitter) || !validateTimeLength(timeSplitter)) {
       setValidTime(false);
       return;
-    };
+    }
     setValidTime(true);
     const reducedTime = validateTimeReducer(timeSplitter);
     setSeconds(reducedTime);
@@ -26,8 +26,13 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
 
   // converts seconds to display
   useEffect(() => {
-    setDisplay(formatSecondsToDisplay(seconds))
+    setDisplay(formatSecondsToDisplay(seconds));
   }, [seconds]);
+
+  const presetTime = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setSeconds(+e.currentTarget.value);
+    setTimeInput('');
+  };
 
   const value = useMemo(
     () => ({
@@ -36,8 +41,9 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
       timeInput,
       setTimeInput,
       validTime,
+      presetTime,
     }),
-    [seconds, display, timeInput, setTimeInput, validTime]
+    [seconds, display, timeInput, setTimeInput, validTime, presetTime]
   );
 
   return <TimeContext.Provider value={value}>{children}</TimeContext.Provider>;

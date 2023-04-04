@@ -8,4 +8,5 @@ export interface TimeContextInterface {
   timeInput: string | undefined;
   setTimeInput: (arg0: string) => void;
   validTime: boolean;
+  presetTime: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
