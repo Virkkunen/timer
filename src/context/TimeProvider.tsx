@@ -31,19 +31,14 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
   }, [timeInput]);
 
   // converts seconds to display
-  useEffect(() => {
-    setDisplay(formatSecondsToDisplay(seconds));
-  }, [seconds]);
+  useEffect(() => setDisplay(formatSecondsToDisplay(seconds)), [seconds]);
 
   // the timer interval
   useEffect(() => {
     let timerInterval: number | undefined;
 
     if (timerActive && seconds > 0 && validTime) {
-      timerInterval = setInterval(
-        () => setSeconds((seconds) => seconds - 1),
-        1000
-      );
+      timerInterval = setInterval(() => setSeconds((seconds) => seconds - 1), 1000);
     }
 
     return () => clearInterval(timerInterval);

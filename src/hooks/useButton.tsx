@@ -2,8 +2,16 @@ import { useCallback, useContext, useState } from 'react';
 import TimeContext from '../context/TimeContext';
 import { ButtonState } from '../types/types';
 
-export const useButton = ():ButtonState => {
-  const { setTimeInput, setValidTime, setSeconds, seconds, validTime, setTimerActive, timerActive } = useContext(TimeContext);
+export const useButton = (): ButtonState => {
+  const {
+    setTimeInput,
+    setValidTime,
+    setSeconds,
+    seconds,
+    validTime,
+    setTimerActive,
+    timerActive,
+  } = useContext(TimeContext);
 
   const presetTime = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setTimeInput('');
@@ -23,6 +31,8 @@ export const useButton = ():ButtonState => {
   }, []);
 
   return {
-    presetTime, toggleTimer, resetTimer,
+    presetTime,
+    toggleTimer,
+    resetTimer,
   };
 };

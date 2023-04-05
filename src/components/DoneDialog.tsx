@@ -28,8 +28,14 @@ const DoneDialog = () => {
   }, [timerDone, audio]);
 
   return (
-    <Transition show={timerDone} as={Fragment}>
-      <Dialog onClose={closeDialog} className='relative z-50'>
+    <Transition
+      show={timerDone}
+      as={Fragment}
+    >
+      <Dialog
+        onClose={closeDialog}
+        className='relative z-50'
+      >
         {/* blurred background */}
         <Transition.Child
           as={Fragment}
@@ -40,7 +46,10 @@ const DoneDialog = () => {
           leaveFrom='opacity-100'
           leaveTo='opacity-0'
         >
-          <div className='fixed inset-0 backdrop-blur-md' aria-hidden='true' />
+          <div
+            className='fixed inset-0 backdrop-blur-md'
+            aria-hidden='true'
+          />
         </Transition.Child>
         {/* actual dialog box */}
         <Transition.Child
@@ -54,9 +63,7 @@ const DoneDialog = () => {
         >
           <div className='fixed inset-0 flex items-center justify-center p-4 drop-shadow hover:drop-shadow-lg'>
             <Dialog.Panel className='w-full max-w-sm rounded-md bg-mantle p-8'>
-              <Dialog.Title className='font-bold text-lg mb-2'>
-                Timer completed!
-              </Dialog.Title>
+              <Dialog.Title className='font-bold text-lg mb-2'>Timer completed!</Dialog.Title>
               <button
                 type='button'
                 className='font-bold text-maroon mt-4 hover:text-red active:text-opacity-60 ease-in-out duration-200'

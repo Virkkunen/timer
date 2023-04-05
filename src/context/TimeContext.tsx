@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import { TimeContextInterface } from "../types/types";
+import { createContext } from 'react';
+import { TimeContextInterface } from '../types/types';
 
 const TimeContext = createContext<TimeContextInterface>({
   seconds: 0,

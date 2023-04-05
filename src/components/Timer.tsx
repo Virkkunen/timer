@@ -4,15 +4,9 @@ import TimeContext from '../context/TimeContext';
 import { useButton } from '../hooks/useButton';
 
 const Timer = () => {
-  const {
-    seconds,
-    display,
-    timeInput,
-    setTimeInput,
-    validTime,
-    timerActive,
-  } = useContext(TimeContext);
-  
+  const { seconds, display, timeInput, setTimeInput, validTime, timerActive } =
+    useContext(TimeContext);
+
   const { presetTime, toggleTimer, resetTimer } = useButton();
   // event: ChangeEvent<HTMLInputElement>
   const handleInputChange = useCallback(
