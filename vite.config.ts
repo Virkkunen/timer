@@ -10,5 +10,11 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     manifest: true,
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        sourcemapExcludeSources: true
+      }
+    }
   }
 })

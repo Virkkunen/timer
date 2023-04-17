@@ -35,7 +35,7 @@ const TimeProvider: React.FC<Props> = ({ children }) => {
 
   // the timer interval
   useEffect(() => {
-    let timerInterval: number | undefined;
+    let timerInterval: any | undefined;
 
     if (timerActive && seconds > 0 && validTime) {
       timerInterval = setInterval(() => setSeconds((seconds) => seconds - 1), 1000);
